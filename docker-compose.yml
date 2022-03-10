@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  http:
+    container_name: backend-http
+    build: ./backend/
+    volumes:
+      - ./backend/src:/app/src
+    ports:
+      - "8000:8000"
+  db:
+    image: mysql
+    container_name: sql
+    ports:
+      - "3310:3306"
+    environment:
+     MYSQL_ROOT_PASSWORD: pass
+     
