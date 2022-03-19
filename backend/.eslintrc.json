@@ -4,7 +4,8 @@
         "es2021": true
     },
     "extends": [
-        "google"
+        "eslint-config-airbnb-base",
+        "airbnb-typescript/base"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
