@@ -1,6 +1,9 @@
 import 'reflect-metadata';
-import { DataSource } from 'typeorm';
+import {DataSource} from 'typeorm';
 import User from './entity/User';
+
+
+
 
 export default new DataSource({
   type: 'mysql',

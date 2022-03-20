@@ -1,4 +1,4 @@
-version: "3.9"
+version: "3.3"
 services:
   http:
     container_name: backend-http
@@ -6,7 +6,7 @@ services:
     command: sh -c './wait-for db:3306 -- npm run dev'
     volumes:
       - ./backend/src:/app/src/
-      - ./wait-for-it:/app/wait-for
+      - ./backend/wait-for:/app/wait-for
     ports:
       - "8000:8000"
     depends_on:
