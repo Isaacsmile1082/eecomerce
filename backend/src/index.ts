@@ -1,16 +1,19 @@
-import AppDataSource from './data-source';
-import User from './entity/User';
+import User from './entity/User'
+import { createConnection } from "typeorm";
 
-AppDataSource.initialize().then(async () => {
-  console.log('Inserting a new user into the database...');
-  const user = new User();
-  user.firstName = 'Timber';
-  user.lastName = 'Saw';
-  user.age = 25;
-  await AppDataSource.manager.save(user);
-  console.log(`Saved a new user with id: ${user.id}`);
-
-  console.log('Loading users from the database...');
-  const users = await AppDataSource.manager.find(User);
-  console.log('Loaded users: ', users);
-}).catch((error: any) => console.log(error));
+createConnection({
+  type: "mysql",
+  host: "db",
+  port: 3306,
+  username: "root",
+  password: "pass",
+  database: "eecomerce",
+  entities: [
+      User
+  ],
+  synchronize: true,
+  logging: false,
+  migrations: {}
+}).then(connection => {
+  console.log('Database connected')
+}).catch(error => console.log(error));

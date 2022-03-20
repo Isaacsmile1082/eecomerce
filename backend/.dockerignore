@@ -5,3 +5,7 @@ dockerfile
 dist
 
 package-lock.json
+
+.env
+
+build
