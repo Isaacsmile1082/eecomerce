@@ -3,15 +3,24 @@ services:
   http:
     container_name: backend-http
     build: ./backend/
+    command: sh -c './wait-for db:3306 -- npm run dev'
     volumes:
       - ./backend/src:/app/src/
+      - ./wait-for-it:/app/wait-for
     ports:
       - "8000:8000"
+    depends_on:
+      - db
   db:
     image: mysql
     container_name: sql
     ports:
       - "3310:3306"
     environment:
+     MYSQL_ROOT_USER: root
      MYSQL_ROOT_PASSWORD: pass
+     MYSQL_DATABASE: eecomerce
+    command: --init-file /data/application/init.sql
+    volumes:
+      - ./init.sql:/data/application/init.sql
      
