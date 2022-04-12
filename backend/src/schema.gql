@@ -1,0 +1,28 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Employer {
+  id: Int!
+  email: String
+  firstName: String
+  lastName: String
+}
+
+type Query {
+  employer(id: Int!): Employer!
+  employers: [Employer!]!
+}
+
+type Mutation {
+  createEmployer(EmployerData: EmployerInput!): Employer!
+  deleteEmployer(id: Int!): Employer!
+  updateEmployer(EmployerData: EmployerInput!): Employer!
+}
+
+input EmployerInput {
+  firstName: String
+  lastName: String
+  email: String!
+  id: Float
+}
