@@ -7,6 +7,10 @@ import { Employer } from './employer/employer.entity';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
+import { ClientsModule } from './clients/clients.module';
+import { Client } from './clients/clients.entity';
+import { ProductsModule } from './products/products.module';
+import { Product } from './products/products.entity';
 
 @Module({
   imports: [
@@ -17,7 +21,7 @@ import { join } from 'path';
       username: 'root',
       password: 'pass',
       database: 'eecomerce',
-      entities: [Employer],
+      entities: [Employer, Client, Product],
       synchronize: true,
     }),
     EmployerModule,
@@ -25,6 +29,8 @@ import { join } from 'path';
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
+    ClientsModule,
+    ProductsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
