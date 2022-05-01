@@ -11,6 +11,8 @@ import { ClientsModule } from './clients/clients.module';
 import { Client } from './clients/clients.entity';
 import { ProductsModule } from './products/products.module';
 import { Product } from './products/products.entity';
+import { BillsModule } from './bills/bills.module';
+import { Bill } from './bills/bill.entity';
 
 @Module({
   imports: [
@@ -21,7 +23,7 @@ import { Product } from './products/products.entity';
       username: 'root',
       password: 'pass',
       database: 'eecomerce',
-      entities: [Employer, Client, Product],
+      entities: [Employer, Client, Product, Bill],
       synchronize: true,
     }),
     EmployerModule,
@@ -31,6 +33,7 @@ import { Product } from './products/products.entity';
     }),
     ClientsModule,
     ProductsModule,
+    BillsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

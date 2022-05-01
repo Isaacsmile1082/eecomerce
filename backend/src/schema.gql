@@ -9,20 +9,40 @@ type Employer {
   lastName: String
 }
 
+type Client {
+  id: String!
+  firstName: String!
+  lastName: String!
+  phoneNumber: Float!
+  email: String!
+}
+
 type Query {
   employer(id: Int!): Employer!
   employers: [Employer!]!
+  getClient(id: String!): Client!
+  getAllClients: [Client!]!
 }
 
 type Mutation {
   createEmployer(EmployerData: EmployerInput!): Employer!
   deleteEmployer(id: Int!): Employer!
   updateEmployer(EmployerData: EmployerInput!): Employer!
+  createClient(ClientData: ClientInput!): Client!
+  updateClient(ClientData: ClientInput!): Client!
+  deleteClient(ClientId: String!): Client!
 }
 
 input EmployerInput {
+  id: String
   firstName: String
   lastName: String
   email: String!
-  id: Float
+}
+
+input ClientInput {
+  firstName: String
+  lastName: String
+  email: String!
+  phoneNumber: Float!
 }
