@@ -1,11 +1,12 @@
 import { Resolver, Query, Args, Int, Mutation } from '@nestjs/graphql';
+import { DeleteResult } from 'typeorm';
 import { Client } from './clients.model';
 import { ClientsService } from './clients.service';
 import { ClientInput } from './dto/create-client.args';
 
 @Resolver((of) => Client)
 export class ClientsResolver {
-  constructor(private clientsService: ClientsService) {}
+  constructor(private clientsService: ClientsService) { }
 
   @Query((returns) => Client, { name: 'getClient' })
   async client(@Args('id', { type: () => String }) id: string) {
@@ -18,16 +19,21 @@ export class ClientsResolver {
   }
 
   @Mutation((returns) => Client)
-  async createClient(@Args('ClientData') CreateClientData: ClientInput) {
+  async createClient(
+    @Args('ClientData') CreateClientData: ClientInput,
+    
+  ) {
     return await this.clientsService.createOne(CreateClientData);
   }
 
   @Mutation((returns) => Client)
-  async updateClient(@Args('ClientData') UpdateClientData: ClientInput) {
+  async updateClient(
+    @Args('ClientData') UpdateClientData: ClientInput,
+    ) {
     return await this.clientsService.updateOne(UpdateClientData);
   }
 
-  @Mutation((returns) => Client)
+  @Mutation((returns) => Boolean)
   async deleteClient(@Args('ClientId') DeleteClientId: string) {
     return await this.clientsService.deleteOne(DeleteClientId)
   }

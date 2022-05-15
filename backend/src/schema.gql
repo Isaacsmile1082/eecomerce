@@ -26,11 +26,11 @@ type Query {
 
 type Mutation {
   createEmployer(EmployerData: EmployerInput!): Employer!
-  deleteEmployer(id: Int!): Employer!
+  deleteEmployer(id: Int!): Boolean!
   updateEmployer(EmployerData: EmployerInput!): Employer!
   createClient(ClientData: ClientInput!): Client!
   updateClient(ClientData: ClientInput!): Client!
-  deleteClient(ClientId: String!): Client!
+  deleteClient(ClientId: String!): Boolean!
 }
 
 input EmployerInput {
@@ -41,6 +41,7 @@ input EmployerInput {
 }
 
 input ClientInput {
+  id: String
   firstName: String
   lastName: String
   email: String!

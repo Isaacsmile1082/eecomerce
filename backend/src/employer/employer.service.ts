@@ -23,11 +23,12 @@ export class EmployerService {
     return await this.employerRepository.save(employer);
   }
 
-  async deleteOne(id: number) {
-    return await this.employerRepository.delete(id);
+  async deleteOne(id: number): Promise<Boolean> {
+    await this.employerRepository.delete(id);
+    return true;
   }
 
   async updateOne(employer: EmployerInput): Promise<Employer> {
-    return await this.employerRepository.save(employer);
+     return await this.employerRepository.save(employer);
   }
 }
