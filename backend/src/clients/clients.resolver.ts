@@ -8,13 +8,13 @@ import { ClientInput } from './dto/create-client.args';
 export class ClientsResolver {
   constructor(private clientsService: ClientsService) { }
 
-  @Query((returns) => Client, { name: 'getClient' })
+  @Query((returns) => Client)
   async client(@Args('id', { type: () => String }) id: string) {
     return this.clientsService.findOne(id);
   }
 
   @Query((returns) => [Client])
-  async getAllClients() {
+  async clients() {
     return this.clientsService.findAll();
   }
 
@@ -34,7 +34,7 @@ export class ClientsResolver {
   }
 
   @Mutation((returns) => Boolean)
-  async deleteClient(@Args('ClientId') DeleteClientId: string) {
+  async removeClient(@Args('ClientId') DeleteClientId: string) {
     return await this.clientsService.deleteOne(DeleteClientId)
   }
 }
