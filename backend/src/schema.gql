@@ -3,7 +3,7 @@
 # ------------------------------------------------------
 
 type Employer {
-  id: Int!
+  id: String!
   email: String
   firstName: String
   lastName: String
@@ -31,6 +31,28 @@ type Product {
   description: String!
 }
 
+type Bill {
+  """Id of the bill"""
+  id: String!
+
+  """Date when it was created"""
+  billdate: DateTime!
+
+  """Products that are implacted it"""
+  products: [Product!]!
+
+  """Employer implicated"""
+  employer: Employer!
+
+  """Client of this bill"""
+  seller: Client!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type Query {
   employer(id: Int!): Employer!
   employers: [Employer!]!
@@ -38,6 +60,8 @@ type Query {
   clients: [Client!]!
   products: [Product!]!
   product(id: String!): Product!
+  bills: [Bill!]!
+  bill(id: String!): Bill!
 }
 
 type Mutation {
@@ -50,6 +74,9 @@ type Mutation {
   createProduct(createProductInput: CreateProductInput!): Product!
   updateProduct(updateProductInput: UpdateProductInput!): Product!
   removeProduct(id: String!): Boolean!
+  createBill(createBillInput: CreateBillInput!): Bill!
+  updateBill(updateBillInput: UpdateBillInput!): Bill!
+  removeBill(id: String!): Bill!
 }
 
 input EmployerInput {
@@ -88,4 +115,28 @@ input UpdateProductInput {
   """Description text of the product"""
   description: String
   id: String!
+}
+
+input CreateBillInput {
+  """Products ids that are implacted it"""
+  products: [String!]!
+
+  """uid of the employer"""
+  employer: String!
+
+  """uuid of the Client"""
+  seller: String!
+}
+
+input UpdateBillInput {
+  """Products ids that are implacted it"""
+  products: [String!]
+
+  """uid of the employer"""
+  employer: String
+
+  """uuid of the Client"""
+  seller: String
+  id: String!
+  billdate: DateTime
 }
