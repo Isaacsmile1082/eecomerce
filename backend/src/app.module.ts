@@ -9,10 +9,10 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { ClientsModule } from './clients/clients.module';
 import { Client } from './clients/clients.entity';
-import { BillsModule } from './bills/bills.module';
-import { Bill } from './bills/bill.entity';
 import { ProductsModule } from './products/products.module';
 import { Product } from './products/entities/products.entity';
+import { BillsModule } from './bills/bills.module';
+import { Bill } from './bills/entities/bill.entity';
 
 @Module({
   imports: [
@@ -23,17 +23,20 @@ import { Product } from './products/entities/products.entity';
       username: 'root',
       password: 'pass',
       database: 'eecomerce',
-      entities: [Employer, Client, Bill, Product],
+      entities: [Employer, Client, Product, Bill],
       synchronize: true,
     }),
     EmployerModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      buildSchemaOptions: {
+        dateScalarMode: 'isoDate'
+      }
     }),
     ClientsModule,
-    BillsModule,
     ProductsModule,
+    BillsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
