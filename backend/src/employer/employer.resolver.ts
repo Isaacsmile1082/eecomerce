@@ -25,7 +25,7 @@ export class EmployerResolver {
   }
 
   @Mutation((returns) => Boolean)
-  async deleteEmployer(@Args('id', { type: () => Int }) id: number) {
+  async removeEmployer(@Args('id', { type: () => Int }) id: number) {
     return await this.employerService.deleteOne(id);
   }
 

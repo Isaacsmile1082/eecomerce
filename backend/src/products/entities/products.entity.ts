@@ -8,6 +8,9 @@ export class Product {
     @Column("varchar", { length: 100 })
     name: string;
 
-    @Column("int")
+    @Column("float")
     price: number;
+
+    @Column("varchar")
+    description: string;
 }

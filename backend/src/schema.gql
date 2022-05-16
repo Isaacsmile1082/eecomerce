@@ -17,20 +17,39 @@ type Client {
   email: String!
 }
 
+type Product {
+  """uuid of the product"""
+  id: String!
+
+  """Name of the product"""
+  name: String!
+
+  """Price of the product"""
+  price: Float!
+
+  """Description text of the product"""
+  description: String!
+}
+
 type Query {
   employer(id: Int!): Employer!
   employers: [Employer!]!
-  getClient(id: String!): Client!
-  getAllClients: [Client!]!
+  client(id: String!): Client!
+  clients: [Client!]!
+  products: [Product!]!
+  product(id: String!): Product!
 }
 
 type Mutation {
   createEmployer(EmployerData: EmployerInput!): Employer!
-  deleteEmployer(id: Int!): Boolean!
+  removeEmployer(id: Int!): Boolean!
   updateEmployer(EmployerData: EmployerInput!): Employer!
   createClient(ClientData: ClientInput!): Client!
   updateClient(ClientData: ClientInput!): Client!
-  deleteClient(ClientId: String!): Boolean!
+  removeClient(ClientId: String!): Boolean!
+  createProduct(createProductInput: CreateProductInput!): Product!
+  updateProduct(updateProductInput: UpdateProductInput!): Product!
+  removeProduct(id: String!): Boolean!
 }
 
 input EmployerInput {
@@ -46,4 +65,27 @@ input ClientInput {
   lastName: String
   email: String!
   phoneNumber: Float!
+}
+
+input CreateProductInput {
+  """Name of the product"""
+  name: String!
+
+  """Price of the product"""
+  price: Float!
+
+  """Description text of the product"""
+  description: String!
+}
+
+input UpdateProductInput {
+  """Name of the product"""
+  name: String
+
+  """Price of the product"""
+  price: Float
+
+  """Description text of the product"""
+  description: String
+  id: String!
 }
