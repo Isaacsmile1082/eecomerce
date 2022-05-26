@@ -17,4 +17,10 @@ export class Employer {
 
   @OneToMany(() => Bill, (bill) => bill.employer)
   bills: Bill[]
+
+  @Column()
+  phoneNumber: string
+
+  @Column()
+  age: number
 }

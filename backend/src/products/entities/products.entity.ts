@@ -13,4 +13,7 @@ export class Product {
 
     @Column("varchar")
     description: string;
+
+    @Column("int")
+    amount: number;
 }

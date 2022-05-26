@@ -1,14 +1,16 @@
+import { Routes, Route } from 'react-router-dom'
+import { TableEmployers } from './components/Table';
 
 
 function App() {
   return (
-    
-      <div>
-        <h1>Hola mundos</h1>
-      </div>
+    <>
+      <Routes>
+        <Route exact path='/employers' element={<TableEmployers/>}/>
+      </Routes>
+    </>
     
   );
 }
 
 export default App;
-  

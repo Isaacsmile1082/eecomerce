@@ -2,13 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Employer {
-  id: String!
-  email: String
-  firstName: String
-  lastName: String
-}
-
 type Client {
   id: String!
   firstName: String!
@@ -29,6 +22,9 @@ type Product {
 
   """Description text of the product"""
   description: String!
+
+  """Amount of products"""
+  amount: Int!
 }
 
 type Bill {
@@ -53,15 +49,62 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type Meta {
+  totalItems: String
+  itemCount: String
+  itemsPerPage: String
+  totalPages: String
+  currentPage: Float
+}
+
+type Links {
+  first: String
+  next: String
+  previous: String
+  last: String
+}
+
+type Employer {
+  id: String!
+  email: String
+  firstName: String
+  lastName: String
+  phoneNumber: String
+  age: Float
+  bills: [Bill!]!
+}
+
+type Employers {
+  items: [Employer!]!
+  meta: Meta!
+  links: Links!
+}
+
 type Query {
-  employer(id: Int!): Employer!
-  employers: [Employer!]!
+  employer(id: Int!): [Employer!]!
+  employers(filterEmployer: FilterEmployerInput): Employers!
   client(id: String!): Client!
   clients: [Client!]!
   products: [Product!]!
   product(id: String!): Product!
   bills: [Bill!]!
   bill(id: String!): Bill!
+}
+
+input FilterEmployerInput {
+  id: String
+  firstName: String
+  lastName: String
+  email: String
+  phoneNumber: String
+  age: Float
+  options: OptionsInput
+}
+
+input OptionsInput {
+  page: Float!
+  limit: Float!
+  route: String!
 }
 
 type Mutation {
@@ -84,6 +127,8 @@ input EmployerInput {
   firstName: String
   lastName: String
   email: String!
+  phoneNumber: String!
+  age: Float!
 }
 
 input ClientInput {
@@ -103,6 +148,9 @@ input CreateProductInput {
 
   """Description text of the product"""
   description: String!
+
+  """Amount of products"""
+  amount: Int!
 }
 
 input UpdateProductInput {
@@ -114,6 +162,9 @@ input UpdateProductInput {
 
   """Description text of the product"""
   description: String
+
+  """Amount of products"""
+  amount: Int
   id: String!
 }
 

@@ -1,4 +1,4 @@
-import { IsEmail, IsString } from 'class-validator';
+import { IsEmail, IsPhoneNumber, IsString } from 'class-validator';
 import { Field, InputType } from '@nestjs/graphql';
 
 @InputType()
@@ -16,4 +16,11 @@ export class EmployerInput {
   @Field({ nullable: false })
   @IsEmail()
   email: string;
+
+  @Field({nullable: false})
+  @IsPhoneNumber()
+  phoneNumber: string;
+
+  @Field({nullable: false})
+  age: number;
 }

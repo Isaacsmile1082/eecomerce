@@ -4,14 +4,23 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { ChakraProvider } from "@chakra-ui/react";
+import { BrowserRouter as Router } from 'react-router-dom'
+import { QueryClient, QueryClientProvider } from 'react-query'
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
+const queryClient = new QueryClient()
+
 root.render(
-  <ChakraProvider>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>{" "}
-  </ChakraProvider>
+  <QueryClientProvider client={queryClient}>
+    <Router>
+      <ChakraProvider>
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>{" "}
+      </ChakraProvider>
+    </Router>
+  </QueryClientProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
