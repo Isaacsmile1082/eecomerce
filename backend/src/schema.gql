@@ -81,7 +81,7 @@ type Employers {
 }
 
 type Query {
-  employer(id: Int!): [Employer!]!
+  employer(id: String!): Employer!
   employers(filterEmployer: FilterEmployerInput): Employers!
   client(id: String!): Client!
   clients: [Client!]!
@@ -109,7 +109,7 @@ input OptionsInput {
 
 type Mutation {
   createEmployer(EmployerData: EmployerInput!): Employer!
-  removeEmployer(id: Int!): Boolean!
+  removeEmployer(id: String!): Boolean!
   updateEmployer(EmployerData: EmployerInput!): Employer!
   createClient(ClientData: ClientInput!): Client!
   updateClient(ClientData: ClientInput!): Client!

@@ -22,32 +22,50 @@ import {
 import { useForm } from "react-hook-form";
 import { emailReg } from '../constants/reges';
 import { AlertForm } from './AlertForm';
-import { useCreateEmployer } from '../graphql/employer';
+import { useCreateEmployer, useUpdateEmployer } from '../graphql/employer';
 import { useQueryClient } from 'react-query';
-export const ModalForm = ({ isOpen, onClose, type }) => {
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
-    defaultValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      age: 20,
-      phoneNumber: ''
-    },
+export const ModalForm = ({
+  isOpen,
+  onClose,
+  type,
+  employerData,
+  isEdit = false
+}) => {
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm({
     shouldFocusError: true,
   });
+
+
+  React.useEffect(() => {
+    setValue('employer', employerData)
+  }, [employerData, setValue])
 
   const queryClient = useQueryClient();
 
 
-  const onSubmit = (data) => { 
-    mutate({
-      employer: data
-    });
-    onClose();
-   }
+  const onSubmit = (data) => {
+    if (isEdit) {
+      data.employer.age = Number(data.employer.age)
+      mutateUpdate(data);
+    } else {
+      data.employer.age = Number(data.employer.age)
+      mutateCreate(data);
+    }
 
-  const {mutate, data} = useCreateEmployer(
+    onClose();
+  }
+
+  const { mutate: mutateCreate } = useCreateEmployer(
+    {
+      onSuccess: (data, variables) => {
+        queryClient.invalidateQueries("employers");
+        queryClient.setQueryData(["employers", { id: variables.id }], data);
+      },
+    }
+  );
+
+  const { mutate: mutateUpdate } = useUpdateEmployer(
     {
       onSuccess: (data, variables) => {
         queryClient.invalidateQueries("employers");
@@ -62,10 +80,10 @@ export const ModalForm = ({ isOpen, onClose, type }) => {
         <ModalOverlay />
         <form onSubmit={handleSubmit(onSubmit)}>
           <ModalContent>
-            {errors.email && errors.email.type === "pattern" && 
-            <AlertForm 
-              title={'Email invalid'} 
-              description='Invalid email pattern' />
+            {errors.email && errors.email.type === "pattern" &&
+              <AlertForm
+                title={'Email invalid'}
+                description='Invalid email pattern' />
             }
             <ModalHeader>{type.replace('/', '')}</ModalHeader>
             <ModalCloseButton />
@@ -73,22 +91,22 @@ export const ModalForm = ({ isOpen, onClose, type }) => {
               <Stack spacing={4}>
                 <FormControl isRequired>
                   <FormLabel htmlFor='first-name'>First name</FormLabel>
-                  <Input {...register('firstName')} id='first-name' placeholder='First name' />
+                  <Input {...register('employer.firstName')} id='first-name' placeholder='First name' />
                 </FormControl>
                 <FormControl isRequired>
                   <FormLabel htmlFor='first-name'>Last name</FormLabel>
-                  <Input {...register('lastName')} id='last-name' placeholder='Last name' />
+                  <Input {...register('employer.lastName')} id='last-name' placeholder='Last name' />
                 </FormControl>
                 <FormControl isRequired>
                   <FormLabel htmlFor='email'>Email</FormLabel>
-                  <Input {...register('email', {
+                  <Input {...register('employer.email', {
                     pattern: emailReg,
                     required: true
                   })} id='email' placeholder='Email' />
                 </FormControl>
                 <FormControl isRequired>
                   <FormLabel htmlFor='age'>Age</FormLabel>
-                  <NumberInput {...register('age')} id='age'>
+                  <NumberInput {...register('employer.age')} id='age'>
                     <NumberInputField />
                     <NumberInputStepper>
                       <NumberIncrementStepper />
@@ -98,13 +116,18 @@ export const ModalForm = ({ isOpen, onClose, type }) => {
                 </FormControl>
                 <FormControl isRequired>
                   <FormLabel htmlFor='phone-number'>Phone number</FormLabel>
-                  <Input {...register('phoneNumber')} id='phone-number' placeholder='Phone number' />
+                  <Input {...register('employer.phoneNumber')} id='phone-number' placeholder='Phone number' />
                 </FormControl>
               </Stack>
             </ModalBody>
             <ModalFooter>
               <Button colorScheme='blue' mr={3} type='submit'>
-                Submit
+                {
+                  isEdit ? 
+                  'Update'
+                  :
+                  'Submit'
+                }
               </Button>
               <Button colorScheme='blue' mr={3} onClick={onClose}>
                 Close

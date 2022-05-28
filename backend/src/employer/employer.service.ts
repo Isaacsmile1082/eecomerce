@@ -67,15 +67,21 @@ export class EmployerService {
   }
 
 
-  async findOne(id: number): Promise<Employer> {
-    return await this.employerRepository.findOne(id);
+  async findOne(id: string): Promise<Employer> {
+    return await this.employerRepository.createQueryBuilder("employer")
+    .where('employer.id = :id', {id})
+    .leftJoinAndSelect('employer.bills', 'bill')
+    .leftJoinAndSelect('bill.products', 'product')
+    .leftJoinAndSelect('bill.seller', 'seller')
+    .leftJoinAndSelect('bill.employer', 'employee')
+    .getOne()
   }
 
   async createOne(employer: EmployerInput): Promise<Employer> {
     return await this.employerRepository.save(employer);
   }
 
-  async deleteOne(id: number): Promise<Boolean> {
+  async deleteOne(id: string): Promise<Boolean> {
     await this.employerRepository.delete(id);
     return true;
   }
