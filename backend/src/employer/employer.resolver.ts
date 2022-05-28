@@ -1,4 +1,4 @@
-import { Resolver, Query, Args, Int, Mutation } from '@nestjs/graphql';
+import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { Employer, Employers } from './employer.model';
 import { EmployerService } from './employer.service';
 import { EmployerInput } from './dto/create-user.args';

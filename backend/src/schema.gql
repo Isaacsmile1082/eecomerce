@@ -8,6 +8,7 @@ type Client {
   lastName: String!
   phoneNumber: Float!
   email: String!
+  bills: [Bill!]!
 }
 
 type Product {

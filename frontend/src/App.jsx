@@ -1,12 +1,17 @@
 import { Routes, Route } from 'react-router-dom'
-import { TableEmployers } from './components/Table';
-
+import { Navbar } from './components/Navbar';
+import { routes } from './constants/routes';
 
 function App() {
   return (
     <>
+      <Navbar/>
       <Routes>
-        <Route exact path='/employers' element={<TableEmployers/>}/>
+        {
+          routes.map(route => (
+            <Route {...route}/>
+          ))
+        }
       </Routes>
     </>
     

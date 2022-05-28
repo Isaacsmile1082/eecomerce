@@ -1,5 +1,4 @@
 import { Resolver, Query, Args, Int, Mutation } from '@nestjs/graphql';
-import { DeleteResult } from 'typeorm';
 import { Client } from './clients.model';
 import { ClientsService } from './clients.service';
 import { ClientInput } from './dto/create-client.args';

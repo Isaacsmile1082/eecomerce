@@ -12,11 +12,22 @@ export class ClientsService {
     ) { }
 
     async findAll(): Promise<Client[]> {
-        return await this.clientRepository.find();
+        return await this.clientRepository
+            .createQueryBuilder("client")
+            .leftJoinAndSelect("client.bills", "bill")
+            .leftJoinAndSelect("bill.products", "product")
+            .leftJoinAndSelect("bill.employer", "employee")
+            .getMany()
     }
 
     async findOne(id: string): Promise<Client> {
-        return await this.clientRepository.findOne(id);
+        return await this.clientRepository
+        .createQueryBuilder("client")
+        .where("client.id = :id", {id})
+        .leftJoinAndSelect("client.bills", "bill")
+        .leftJoinAndSelect("bill.products", "product")
+        .leftJoinAndSelect("bill.employer", "employee")
+        .getOne();
     }
 
     async createOne(client: ClientInput): Promise<Client> {

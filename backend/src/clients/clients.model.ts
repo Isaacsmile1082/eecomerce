@@ -1,4 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
+import { Bill } from 'src/bills/entities/bill.model';
 
 @ObjectType()
 export class Client {
@@ -16,4 +17,7 @@ export class Client {
 
     @Field()
     email: string;
+
+    @Field(type => [Bill])
+    bills: Bill[]
 }   
